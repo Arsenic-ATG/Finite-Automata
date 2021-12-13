@@ -1,3 +1,8 @@
+### ggtags ###
+GPATH
+GRTAGS
+GTAGS
+
 ### CMake ###
 CMakeLists.txt.user
 CMakeCache.txt
