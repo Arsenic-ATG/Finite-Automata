@@ -1,35 +1,29 @@
 #include "FA.h"
 
-/* a finite autometa is a 5 tupple ( Q, sigma, delta, F, q0 )
-class finite_autometa
-{
- public:
-
-  finite_autometa();
-  
-  int move(int current_state, char symbol);
-  // maybe a function to check sanity of the autometa;
-  
- private:
-  bool is_NFA;
-  std::set<int> Q;
-  std::set<char> input;
-  std::set<int> F;
-  int q0;
-  std::unordered_map<std::pair<int,int>, int>;
-  
-}
-*/
-
 /*Constructor of class finite_autometa.  */
-finite_autometa::finite_autometa ();
+finite_autometa::finite_autometa (const std::set <int> states,
+				  const std::set <char> input_alpha,
+				  const std::set <int> final_states,
+				  const int initial_state,
+				  std::unordered_map <std::pair <int,int>, int> relations )
+  :m_Q (states), m_input (input_alpha), m_F (final_states), m_q0 (initial_state), m_tr (relations)
+{
+  //TODO: check if it's an DFA or not and set is_dfa accordingly
+}
 
 /*Function to move from one state to another based on the trasition relation
   defined by the autometa and return the value of new state reached by the
-  autometa.  */
+  autometa.
+  return -1 in case the transition relation doesn't exist.  */
 int
 finite_autometa::move (int current_state, char symbol)
 {
-  int new_state = tr [std::make_pair (current_state,symbol)];
-  return new_state;
+  auto new_state = m_tr.find({current_state,symbol});
+
+  if (new_state != m_tr.end ())
+    {
+      return -1;
+    }
+  else
+    return (new_state->second);
 }
