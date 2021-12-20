@@ -36,7 +36,8 @@ class finite_autometa
   std::set <char> get_input_chars () const {return m_input;};
   std::set <int> get_finalstates () const {return m_F;};
   int get_initialstate () const {return m_q0;};
-  // const std::unordered_map <std::pair <int, int>, int> get_transition_relations ();
+  std::unordered_map <std::pair <int, int>, int, pair_hash> get_transition_relations () const
+  { return m_tr; };
   
  private:
   bool m_is_DFA;
@@ -44,6 +45,7 @@ class finite_autometa
   const std::set <char> m_input;
   const std::set <int> m_F;
   const int m_q0;
+  // Fixme: this type of transistion table would not work for NFA.
   const std::unordered_map <std::pair <int, int>, int, pair_hash> m_tr;
 };
 
