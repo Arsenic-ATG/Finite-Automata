@@ -1,29 +1,30 @@
 #include "FA.h"
+using namespace fa;
 
 /*Constructor of class finite_autometa.  */
-finite_autometa::finite_autometa (const std::set <int> states,
-				  const std::set <char> input_alpha,
-				  const std::set <int> final_states,
-				  const int initial_state,
-				  std::unordered_map <std::pair <int,int>, int> relations )
+finite_autometa::finite_autometa (const std::set <state> states,
+				  const std::set <symbol> input_alpha,
+				  const std::set <state> final_states,
+				  const state initial_state,
+				  transition_table relations)
   :m_Q (states), m_input (input_alpha), m_F (final_states), m_q0 (initial_state), m_tr (relations)
 {
   //TODO: check if it's an DFA or not and set is_dfa accordingly
 }
 
 /*Function to move from one state to another based on the trasition relation
-  defined by the autometa and return the value of new state reached by the
-  autometa.
-  return -1 in case the transition relation doesn't exist.  */
-int
-finite_autometa::move (int current_state, char symbol)
+  defined by the autometa and return the set of new states the autometa can move
+  to and return empty set in case the transition relation doesn't exist.  */
+auto
+finite_autometa::move (state current_state, symbol input_symbol) const
 {
-  auto new_state = m_tr.find({current_state,symbol});
-
+  auto new_state = m_tr.find({current_state, input_symbol});
+  
   if (new_state != m_tr.end ())
     {
-      return -1;
+      return new_state;
     }
-  else
-    return (new_state->second);
+  
+  new_state = {};
+  return new_state;
 }
