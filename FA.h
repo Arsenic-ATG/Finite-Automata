@@ -17,14 +17,14 @@ struct pair_hash {
     }
 };
 
-
+constexpr int epsilon = 0;
 using state = int;
 using symbol = char;
 /*Each STATE on scanning a symbol maps to a set of states.  */
 using transition_table =  std::unordered_map <std::pair <state, symbol>,
 					      std::set <state>,
 					      pair_hash>;
-
+ 
 
 /* A finite autometa is a 5 tupple ( Q, sigma, delta, F, q0 ).  */
 class finite_autometa
@@ -39,7 +39,7 @@ class finite_autometa
     
   finite_autometa();
   
-  auto move(state current_state, symbol scanned_symbol) const;
+  auto move(state current_state, symbol scanned_symbol) const -> std::set<state>;
   //TODO: maybe a function to check sanity of the autometa.
 
   // Accessors
