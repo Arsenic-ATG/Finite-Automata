@@ -1,10 +1,11 @@
 #include "FA.h"
-#include <unordered_map>
+#include <map>
 #include <utility>
 #include <set>
 #include <stack>
 
-/*Function to return epsilon closure of the state of the finite autometa.  */
+/*Function to return epsilon closure of the set of nfa states T of the finite
+  autometa FA.  */
 auto
 epsilon_closure (std::set <fa::state> t,
 		 const fa::finite_autometa &fa)
@@ -41,17 +42,36 @@ epsilon_closure (std::set <fa::state> t,
   return e_t;
 }
 
+/*Function to return epsilon closure of a state T of the finite autometa FA.  */
 auto
-get_next_unmarked_state (std::unordered_map <int, bool> &d_states)
+epsilon_closure (fa::state t,
+		 const fa::finite_autometa &fa)
 {
-  for (auto i = d_states.begin (); i != d_states.end (); ++i)
+  auto fa_trans = fa.get_transition_relations ();
+  auto fa_states = fa.get_states ();
+
+  std::stack <fa::state> st;
+  st.push (t);
+
+  auto e_t = std::set ({t});
+  while (!st.empty ())
     {
-      if (i->second == false)
+      auto top = st.top ();
+      st.pop ();
+
+      for (auto current_state: fa_states)
 	{
-	  return i->first;
+	  auto reachable_states = fa.move (current_state, fa::epsilon);
+	  if (reachable_states.count (top)
+	      && (!e_t.count (current_state)))
+	    {
+	      e_t.insert (current_state);
+	      st.push (current_state);
+	    }
 	}
     }
-  return -1;
+
+  return e_t;
 }
 
 /*The function take's non detereminisitic finite autometa (NAF) and returns a
@@ -59,48 +79,35 @@ get_next_unmarked_state (std::unordered_map <int, bool> &d_states)
 auto
 convert (const fa::finite_autometa &nfa)
 {
-  // populate dstates with nfa states
-  std::set <int> res_states;
-  std::set <int> res_final_states = nfa.get_finalstates();
+  auto s0 =  epsilon_closure (std::set ( {nfa.get_initialstate ()}),
+			       nfa);
 
-  auto nfa_states = nfa.get_states ();
-  std::unordered_map <int, bool> d_states;
-  fa::transition_table d_tran;
-  for (auto s: nfa_states)
+  /* the idea is that every dfa state is a set of nfa states.  */
+  auto dfa_states = std::set ({s0});
+
+  auto input_symbols = nfa.get_input_chars ();
+  fa::transition_table dfa_trans;
+
+  auto unmarked_states = dfa_states;
+  /* unmark all the nfa states.  */
+  for (auto nfa_state: nfa.get_states ())
     {
-      d_states.insert ({s, false});
+      unmarked_states.insert (std::set ({nfa_state}));
     }
 
-  // initialy let's assume thre are no null transitions
-  auto s = get_next_unmarked_state (d_states);
-  while (s != -1)
+  while (! unmarked_states.empty ())
     {
-      //mark
-      d_states [s] = true;
-
-      for (auto symbol: nfa.get_input_chars ())
+      auto T = unmarked_states.extract (unmarked_states.begin ());
+      for (auto symbol: input_symbols)
 	{
-	  auto new_state = nfa.move (s, symbol);
-
-	  if (d_states.find (new_state) != d_states.end ())
+	  auto u = epsilon_closure (nfa.move (T.value (),symbol), nfa);
+	  if (!dfa_states.count (u))
 	    {
-	      d_states.insert ({new_state, false});
-	      if (res_final_states.find (new_state) != res_final_states.end ())
-		res_final_states.insert (new_state);
+	      dfa_states.insert (u);
+	      unmarked_states.insert (u);
 	    }
-
-	  d_tran [{s,symbol}] = new_state;
 	}
-
-      s = get_next_unmarked_state (d_states);
-    }
-
-  // make set of states
-  for (auto i: d_states)
-    {
-      res_states.insert (i.first);
     }
 
   // final dfa
-  // auto dfa = finite_autometa (
 }

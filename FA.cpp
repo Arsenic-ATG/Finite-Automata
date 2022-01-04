@@ -15,16 +15,36 @@ finite_autometa::finite_autometa (const std::set <state> states,
 /*Function to move from one state to another based on the trasition relation
   defined by the autometa and return the set of new states the autometa can move
   to and return empty set in case the transition relation doesn't exist.  */
-auto
+std::set <state>
 finite_autometa::move (state current_state, symbol input_symbol) const
 {
   auto new_state = m_tr.find({current_state, input_symbol});
-  
+
   if (new_state != m_tr.end ())
     {
-      return new_state;
+      return (new_state->second);
     }
-  
-  new_state = {};
-  return new_state;
+
+  return {};
+}
+
+
+/*Function to move from a set of states to another based on the trasition
+  relation defined by the autometa and return the set of new states the autometa
+  can move to and return empty set in case the transition relation doesn't
+  exist.  */
+std::set <state>
+finite_autometa::move (std::set<state> states, symbol input_symbol) const
+{
+  std::set <state> destination_set;
+  for (auto current_state: states)
+    {
+      auto new_states = move (current_state, input_symbol);
+
+      for (auto dest_state: new_states)
+	{
+	  destination_set.insert (dest_state);
+	}
+    }
+  return destination_set;
 }
