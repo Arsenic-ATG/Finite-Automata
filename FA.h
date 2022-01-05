@@ -6,13 +6,12 @@ namespace fa
 {
 
 constexpr auto epsilon = 0i;
-using state = std::set <int>;
+using state = int;
 using symbol = char;
 
-/*Each STATE on scanning a symbol maps to a set of states.  */
+/* Each STATE on scanning a symbol maps to a set of states.  */
 using transition_table =  std::map <std::pair <state, symbol>,
 				    std::set <state>>;
-
 
 /* A finite autometa is a 5 tupple ( Q, sigma, delta, F, q0 ).  */
 class finite_autometa
