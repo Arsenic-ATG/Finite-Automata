@@ -5,7 +5,7 @@
 namespace fa
 {
 
-constexpr auto epsilon = 0i;
+constexpr auto epsilon = 0;
 using state = int;
 using symbol = char;
 
