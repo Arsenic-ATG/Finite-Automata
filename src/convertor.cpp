@@ -3,6 +3,7 @@
 #include <utility>
 #include <set>
 #include <stack>
+#include <iostream>
 
 /*epsilon_closure of T ( of FA ) is set of NFA states reachable from state T on
   epsilon transition.  */
@@ -13,6 +14,8 @@ epsilon_closure (fa::state t,
   auto fa_trans = fa.get_transition_relations ();
   auto fa_states = fa.get_states ();
 
+  /*I didn't seem to find a way to convert these types of declarations
+    to "auto".  */
   std::stack <fa::state> st;
   st.push (t);
 
@@ -104,4 +107,48 @@ convert (const fa::finite_autometa &nfa)
 	}
     }
   return dfa_trans;
+}
+
+auto main() -> int
+{
+  // TODO: add more tests
+  auto nfa_transitions = (fa::transition_table) { {{1,'a'},{1}} ,
+						  {{1,'b'},{2}} ,
+						  {{2,'a'},{2,1}} ,
+						  {{2,'b'},{3}} ,
+						  {{3,'a'},{3}} ,
+						  {{3,'b'},{3}}};
+  auto nfa = fa::finite_autometa ({1,2,3},
+				 {'a','b'},
+				 {3},
+				 1,
+				 nfa_transitions);
+  auto dfa_trans = convert(nfa);
+
+  /*Print this new transition table on stdout.
+   This is makeshift for now and would be moved in seperate function
+   or would be replaced by automated testing of some kind. */
+  for (const auto& tran : dfa_trans)
+    {
+      // states
+      std::cout <<"{ ";
+      for (auto state : tran.first.first)
+	{
+	  std::cout<<state<<", ";
+	}
+      std::cout<<"} ";
+
+      //symbol scanned
+      std::cout<<tran.first.second<<" -> ";
+
+      // destination state
+      std::cout <<"{ ";
+      for (auto state : tran.second)
+	{
+	  std::cout<<state<<", ";
+	}
+      std::cout<<"}\n";
+    }
+
+  return 0;
 }
