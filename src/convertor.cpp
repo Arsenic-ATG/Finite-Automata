@@ -14,9 +14,7 @@ epsilon_closure (fa::state t,
   auto fa_trans = fa.get_transition_relations ();
   auto fa_states = fa.get_states ();
 
-  /*I didn't seem to find a way to convert these types of declarations
-    to "auto".  */
-  std::stack <fa::state> st;
+  auto st = (std::stack <fa::state>) {};
   st.push (t);
 
   auto e_t = std::set({t});
@@ -48,7 +46,7 @@ epsilon_closure (std::set <fa::state> t,
   auto fa_trans = fa.get_transition_relations ();
   auto fa_states = fa.get_states ();
 
-  std::stack <fa::state> st;
+  auto st = (std::stack <fa::state>) {};
   for (auto s: t)
     {
       st.push (s);
@@ -119,10 +117,10 @@ auto main() -> int
 						  {{3,'a'},{3}} ,
 						  {{3,'b'},{3}}};
   auto nfa = fa::finite_autometa ({1,2,3},
-				 {'a','b'},
-				 {3},
-				 1,
-				 nfa_transitions);
+				  {'a','b'},
+				  {3},
+				  1,
+				  nfa_transitions);
   auto dfa_trans = convert(nfa);
 
   /*Print this new transition table on stdout.
@@ -134,9 +132,9 @@ auto main() -> int
       std::cout <<"{ ";
       for (auto state : tran.first.first)
 	{
-	  std::cout<<state<<", ";
+	  std::cout<<state<<" ";
 	}
-      std::cout<<"} ";
+      std::cout<<"} / ";
 
       //symbol scanned
       std::cout<<tran.first.second<<" -> ";
@@ -145,7 +143,7 @@ auto main() -> int
       std::cout <<"{ ";
       for (auto state : tran.second)
 	{
-	  std::cout<<state<<", ";
+	  std::cout<<state<<" ";
 	}
       std::cout<<"}\n";
     }
