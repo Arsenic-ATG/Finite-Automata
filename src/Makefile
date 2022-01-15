@@ -18,4 +18,4 @@ clean:
 	$(RM) $(OBJS)
 
 distclean: clean
-	$(RM) tool
+	$(RM) convertor
