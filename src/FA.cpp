@@ -12,6 +12,24 @@ finite_autometa::finite_autometa (const std::set <state> states,
   //TODO: check if it's an DFA or not and set is_dfa accordingly
 }
 
+/*Constructor of class finite_autometa.  */
+finite_autometa::finite_autometa (const state initial_state,
+				  transition_table relations,
+				  const std::set <state> final_states)
+  : m_F (final_states), m_q0 (initial_state),  m_tr (relations)
+{
+  m_Q = {};
+  for (auto transition: relations)
+    {
+      m_Q.insert (transition.first.first);
+      for (auto st: transition.second)
+	{
+	  m_Q.insert (st);
+	}
+    }
+}
+
+
 /*Function to move from one state to another based on the trasition relation
   defined by the autometa and return the set of new states the autometa can move
   to and return empty set in case the transition relation doesn't exist.  */

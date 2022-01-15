@@ -24,7 +24,11 @@ class finite_autometa
 		   const state initial_state,
 		   transition_table relations);
 
-  finite_autometa();
+  finite_autometa (const state initial_state,
+		   transition_table ralations,
+		   const std::set <state> final_states);
+
+  // TODO: make one for regex also.
 
   auto move (state current_state, symbol scanned_symbol) const -> std::set <state>;
   auto move (std::set <state> states, symbol scanned_symbol) const -> std::set <state>;
@@ -42,7 +46,7 @@ class finite_autometa
  private:
 
   bool m_is_DFA;
-  const std::set <state> m_Q;
+  std::set <state> m_Q;
   const std::set <symbol> m_input;
   const std::set <state> m_F;
   const state m_q0;
