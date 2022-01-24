@@ -2,7 +2,7 @@ CXX=g++
 CXXFLAGS=-std=c++17
 RM=rm -f
 
-SRCS=FA.cpp convertor.cpp
+SRCS= convertor.cpp FA.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 all: convertor
