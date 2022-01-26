@@ -1,6 +1,11 @@
 # Finite Automata
+A C++ library to simulate finite automata.
 
-The program is focused on implementing `convert ()` function which simply converts a [NFA](https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton) to [DFA](https://en.wikipedia.org/wiki/Deterministic_finite_automaton) using [subset construction method](https://en.wikipedia.org/wiki/Powerset_construction)
+## The API
+
+[WIP]
+
+- fa::convert (): function which simply converts a [NFA](https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton) to [DFA](https://en.wikipedia.org/wiki/Deterministic_finite_automaton) using [subset construction method](https://en.wikipedia.org/wiki/Powerset_construction)
 
 --- 
 
