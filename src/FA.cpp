@@ -171,35 +171,29 @@ fa::convert_to_dfa (const finite_automata &nfa)
 
   /*Filter-pass: create a standard finite automata out of this
     transition table table.  */
-  auto dfa_code_map = std::map <std::set <state>, state> {};
+  auto dfa_code_map = std::map <dfa_state, state> {};
   auto final_dfa_states = std::set <state> {};
   auto final_dfa_trans = (transition_table) {};
-  auto final_dfa_final_states = final_dfa_states;;
-  auto current_state_itr = dfa_states.begin ();
+  auto final_dfa_final_states = final_dfa_states;
 
-  for (auto i = 1u; i <= dfa_states.size (); current_state_itr++,i++)
+  auto state_counter = 1u;
+
+  for (auto current_state: dfa_states)
     {
-      final_dfa_states.insert (i);
-      dfa_code_map [*current_state_itr] = i;
-
-      for (auto st: *current_state_itr)
-	{
-	  if (nfa_final_state.count (st))
-	    {
-	      final_dfa_final_states.insert (i);
-	      break;
-	    }
-	}
+      final_dfa_states.insert (state_counter);
+      dfa_code_map [current_state] = state_counter++;
     }
 
   for (auto transition : dfa_trans)
     {
-      final_dfa_trans [{dfa_code_map [transition.first.first], transition.first.second}]
-	= transition.second;
+      auto source = std::make_pair(dfa_code_map [transition.first.first],
+                                   transition.first.second);
+      auto destination = std::set <state> {dfa_code_map [transition.second]};
+
+      final_dfa_trans [source] = destination;
     }
 
   auto final_dfa_init_state = dfa_code_map [s0];
-
 
   return finite_automata (final_dfa_states,
 			  nfa.get_input_chars (),
