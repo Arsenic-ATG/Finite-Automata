@@ -1,3 +1,6 @@
+#ifndef FA_H
+#define FA_H
+
 #include <map>
 #include <set>
 #include <utility>
@@ -49,14 +52,15 @@ class finite_automata
  private:
 
   bool m_is_DFA;
-  std::set <state> m_Q;
+  const std::set <state> m_Q;
   const std::set <symbol> m_input;
   const std::set <state> m_F;
   const state m_q0;
   const transition_table m_tr;
 };
 
+auto calc_state_set (const transition_table &relations) -> std::set<state>;
 auto convert_to_dfa (const finite_automata &nfa) -> finite_automata;
-int test ();
+}    // namespace fa
 
-} // namespace fa
+#endif    // FA_H
