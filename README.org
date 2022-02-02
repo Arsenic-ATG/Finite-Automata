@@ -1,0 +1,51 @@
+* Finite Automata
+  :PROPERTIES:
+  :CUSTOM_ID: finite-automata
+  :END:
+  
+A simple C++ library to simulate finite automata.
+
+** The API
+   :PROPERTIES:
+   :CUSTOM_ID: the-api
+   :END:
+[WIP]
+
+The library mostly operates upon a object of class =finite_automata= which is a 5 tuple (Q, Σ, δ, q0, F)
+
+1. Q = finite set of states the automata can operate on.
+2. Σ = Finte set of input aphabet symbols
+3. δ = transition functions ( )
+4. q0 = initial state
+5. F = finite set of final states
+   
+one can create an object of type =finite_automata= by simply passing all these to the constructor
+
+#+begin_src cpp
+
+  auto nfa_transitions = (fa::transition_table) { {{1,'a'},{1}} ,
+                                                  {{1,'b'},{2}} ,
+                                                  {{2,'a'},{2,1}} ,
+                                                  {{2,'b'},{3}} ,
+                                                  {{3,'a'},{3}} ,
+                                                  {{3,'b'},{3}}};
+
+    auto nfa = fa::finite_automata ({1,2,3},
+                                    {'a','b'},
+                                    {3},
+                                    1,
+                                    nfa_transitions);
+
+#+end_src
+
+If there are not additional states to work upon, one can also construct finite automata wihout explicitly providing set of states and/or set of input alphabets ( in that case, those sets would be created via transition table)
+
+---
+   
+- =fa::convert_to_dfa ()=: function which simply converts a [[https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton][NFA]] to [[https://en.wikipedia.org/wiki/Deterministic_finite_automaton][DFA]] using [[https://en.wikipedia.org/wiki/Powerset_construction][subset construction method]]
+
+---
+
+This is my attempt to create a project based on the philosophy of using [[https://en.cppreference.com/w/cpp/language/auto][=auto=]] for all the things. The project solely exists for experimental/learning purposes and for me to learn about advantages/disadvantages of using auto everywhere in a C++ project.
+
+Critiques and/or suggestions to improve it are more than welcome.
