@@ -26,6 +26,13 @@ finite_automata::finite_automata (const std::set <symbol> input_alpha,
 {
 }
 
+/*Constructor of class finite_autometa.  */
+finite_automata::finite_automata (const state initial_state,
+				  transition_table relations,
+				  const std::set <state> final_states)
+  :m_Q (calc_state_set (relations)), m_input (calc_input_alpha (relations)), m_F (final_states), m_q0 (initial_state), m_tr (relations)
+{
+}
 
 /*Function to move from one state to another based on the trasition relation
   defined by the autometa and return the set of new states the autometa can move
@@ -121,10 +128,10 @@ finite_automata::epsilon_closure (std::set <state> st) const
   return e_closure;
 }
 
-/*Utility function to calcualte state set from given transition
+/*Utility function to calculate state set from given transition
   relations.  */
 std::set<state>
-calc_state_set (const transition_table &relations)
+fa::calc_state_set (const transition_table &relations)
 {
   auto states = std::set <fa::state> {};
 
@@ -137,6 +144,21 @@ calc_state_set (const transition_table &relations)
 	}
     }
   return states;
+}
+
+/*Utility function to calculate set of input alphabets from given
+  transition relations.  */
+std::set<symbol>
+fa::calc_input_alpha (const transition_table &relations)
+{
+  auto input_alpha= std::set <fa::symbol> {};
+
+  for (auto transition: relations)
+    {
+      input_alpha.insert (transition.first.second);
+    }
+
+  return input_alpha;
 }
 
 /*Function to convert given NFA to equivalant DFA via subset

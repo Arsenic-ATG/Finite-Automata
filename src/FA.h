@@ -67,6 +67,7 @@ class finite_automata
 };
 
 auto calc_state_set (const transition_table &relations) -> std::set<state>;
+auto calc_input_alpha (const transition_table &relations) -> std::set<symbol>;
 auto convert_to_dfa (const finite_automata &nfa) -> finite_automata;
 }    // namespace fa
 
