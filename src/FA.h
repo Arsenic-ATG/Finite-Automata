@@ -13,8 +13,8 @@ using state = int;
 using symbol = char;
 
 /* Each STATE on scanning a symbol maps to a set of states.  */
-using transition_table =  std::map <std::pair <state, symbol>,
-				    std::set <state>>;
+using transition_table = std::map <std::pair <state, symbol>,
+				   std::set <state>>;
 
 /* A finite autometa is a 5 tupple ( Q, sigma, delta, F, q0 ).  */
 class finite_automata
@@ -27,14 +27,21 @@ class finite_automata
 		   const state initial_state,
 		   transition_table relations);
 
+  finite_automata (const std::set <symbol> input_alpha,
+                   const state initial_state,
+		   const transition_table ralations,
+		   const std::set <state> final_states);
+
   finite_automata (const state initial_state,
-		   transition_table ralations,
+		   const transition_table ralations,
 		   const std::set <state> final_states);
 
   // TODO: make one for regex also.
 
-  auto move (state current_state, symbol scanned_symbol) const -> std::set <state>;
-  auto move (std::set <state> states, symbol scanned_symbol) const -> std::set <state>;
+  auto move (state current_state,
+             symbol scanned_symbol) const -> std::set <state>;
+  auto move (std::set <state> states,
+             symbol scanned_symbol) const -> std::set <state>;
 
   auto epsilon_closure (state st) const -> std::set <state>;
   auto epsilon_closure (std::set <state> st) const -> std::set <state>;

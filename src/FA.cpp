@@ -18,20 +18,12 @@ finite_automata::finite_automata (const std::set <state> states,
 }
 
 /*Constructor of class finite_autometa.  */
-finite_automata::finite_automata (const state initial_state,
+finite_automata::finite_automata (const std::set <symbol> input_alpha,
+                                  const state initial_state,
 				  transition_table relations,
 				  const std::set <state> final_states)
-  : m_F (final_states), m_q0 (initial_state),  m_tr (relations)
+  :m_Q (calc_state_set (relations)), m_input (input_alpha), m_F (final_states), m_q0 (initial_state), m_tr (relations)
 {
-  m_Q = {};
-  for (auto transition: relations)
-    {
-      m_Q.insert (transition.first.first);
-      for (auto st: transition.second)
-	{
-	  m_Q.insert (st);
-	}
-    }
 }
 
 
@@ -129,6 +121,23 @@ finite_automata::epsilon_closure (std::set <state> st) const
   return e_closure;
 }
 
+/*Utility function to calcualte state set from given transition
+  relations.  */
+std::set<state>
+calc_state_set (const transition_table &relations)
+{
+  auto states = std::set <fa::state> {};
+
+  for (auto transition: relations)
+    {
+      states.insert (transition.first.first);
+      for (auto st: transition.second)
+	{
+	  states.insert (st);
+	}
+    }
+  return states;
+}
 
 /*Function to convert given NFA to equivalant DFA via subset
   construction method. The function doesn't gurentee the DFA to be
@@ -186,7 +195,7 @@ fa::convert_to_dfa (const finite_automata &nfa)
 
   for (auto transition : dfa_trans)
     {
-      auto source = std::make_pair(dfa_code_map [transition.first.first],
+      auto source = std::make_pair (dfa_code_map [transition.first.first],
                                    transition.first.second);
       auto destination = std::set <state> {dfa_code_map [transition.second]};
 
