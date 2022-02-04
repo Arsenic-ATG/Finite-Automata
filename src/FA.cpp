@@ -4,6 +4,8 @@
 #include <map>
 #include <vector>
 #include <utility>
+#include <string>
+#include <algorithm>
 using namespace fa;
 
 /*Constructor of class finite_autometa.  */
@@ -70,6 +72,29 @@ finite_automata::move (std::set<state> states, symbol input_symbol) const
     }
   return destination_set;
 }
+
+/*simulate finite automata to recognize string WORD.  */
+bool
+finite_automata::simulate (std::string word) const
+{
+  auto possible_dest = epsilon_closure (m_q0);
+
+  for (auto &current_char_itr : word)
+    {
+      possible_dest = epsilon_closure (move (possible_dest,
+                                             current_char_itr));
+    }
+
+  std::set<int> intersection;
+  std::set_intersection(m_F.begin (), m_F.end (),
+                        possible_dest.begin (),possible_dest.end (),
+                        std::inserter(intersection,
+                                      intersection.end()));
+
+  if (intersection.empty ()) return false;
+  return true;
+}
+
 
 /*epsilon_closure of state ST ( fo the current FA) is a set of states
   that are reachable from the state St wihout scanning a symbol from

@@ -37,7 +37,7 @@ class finite_automata
 		   const std::set <state> final_states);
 
   // TODO: make one for regex also.
-
+  auto simulate (std::string word) const -> bool;
   auto move (state current_state,
              symbol scanned_symbol) const -> std::set <state>;
   auto move (std::set <state> states,
