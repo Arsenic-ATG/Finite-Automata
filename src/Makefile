@@ -1,21 +1,30 @@
 CXX=g++
 CXXFLAGS=-std=c++17
-RM=rm -f
 
-SRCS= convertor.cpp FA.cpp
-OBJS=$(subst .cpp,.o,$(SRCS))
+# Extensions of files to delete when cleaning
+CLEANEXTS   = o a
 
-all: convertor
+# target file and the install directory
+OUTPUTFILE  = falib.a
+INSTALLDIR  = ../binaries
 
-convertor: $(OBJS)
-	$(CXX) -o convertor $(OBJS)
+# Default target
+.PHONY: all
+all: $(OUTPUTFILE)
 
-FA.o: FA.h FA.cpp
+# Build libjohnpaul.a from john.o, paul.o, and johnpaul.o
+$(OUTPUTFILE): fa.o
+	ar ru $@ $^
+	ranlib $@
 
-convertor.o: FA.o convertor.cpp
+.PHONY: install
+install:
+	mkdir -p $(INSTALLDIR)
+	cp -p $(OUTPUTFILE) $(INSTALLDIR)
 
+.PHONY: clean
 clean:
-	$(RM) $(OBJS)
+	for file in $(CLEANEXTS); do rm -f *.$$file; done
 
-distclean: clean
-	$(RM) convertor
+# Indicate dependencies of .ccp files on .hpp files
+fa.o: FA.cpp FA.h
