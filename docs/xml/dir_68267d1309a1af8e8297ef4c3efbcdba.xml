@@ -2,7 +2,6 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.3" xml:lang="en-US">
   <compounddef id="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir">
     <compoundname>/Users/ankursaini/Desktop/project stuff/NFA2DFA/src</compoundname>
-    <innerfile refid="convertor_8cpp">convertor.cpp</innerfile>
     <innerfile refid="_f_a_8cpp">FA.cpp</innerfile>
     <innerfile refid="_f_a_8h">FA.h</innerfile>
     <briefdescription>
