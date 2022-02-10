@@ -30,9 +30,6 @@
     <member refid="_f_a_8h_1afba5b78ef97d97336953055317395f52" kind="function"><name>calc_input_alpha</name></member>
     <member refid="_f_a_8h_1a29de1583f51830cc6a05d602dba2ece4" kind="function"><name>convert_to_dfa</name></member>
   </compound>
-  <compound refid="convertor_8cpp" kind="file"><name>convertor.cpp</name>
-    <member refid="convertor_8cpp_1a8216c1645620cdb2f629cde3ac02ffef" kind="function"><name>main</name></member>
-  </compound>
   <compound refid="_f_a_8cpp" kind="file"><name>FA.cpp</name>
   </compound>
   <compound refid="_f_a_8h" kind="file"><name>FA.h</name>
