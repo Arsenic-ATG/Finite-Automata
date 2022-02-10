@@ -15,10 +15,10 @@ auto main() -> int
 				  {3},
 				  1,
 				  nfa_transitions);
-  
+
   auto dfa = fa::convert_to_dfa (nfa);
   auto dfa_trans = dfa.get_transition_relations ();
-  
+
   /*Print this new transition table on stdout.
    This is makeshift for now and would be moved in seperate function
    or would be replaced by automated testing of some kind. */
