@@ -5,12 +5,6 @@
   
 A simple C++ library to simulate finite automata.
 
-** The API
-   :PROPERTIES:
-   :CUSTOM_ID: the-api
-   :END:
-[WIP]
-
 The library mostly operates upon a object of class =finite_automata= which is by definition a 5 tuple (Q, Σ, δ, q0, F)
 
 1. Q = finite set of states the automata can operate on.
@@ -19,7 +13,7 @@ The library mostly operates upon a object of class =finite_automata= which is by
 4. q0 = initial state
 5. F = finite set of final states
    
-one can create an object of type =finite_automata= by simply passing all these to the constructor
+one can create an object of type =finite_automata= like this :
 
 #+begin_src cpp
 
@@ -38,21 +32,30 @@ one can create an object of type =finite_automata= by simply passing all these t
 
 #+end_src
 
-If there are not additional states to work upon, one can also construct finite automata wihout explicitly providing set of states and/or set of input alphabets ( in that case, those sets would be created via transition table)
+learn more about the API in the docs.
 
-*** memeber functions
+** Prerequisits ( to build from source )
 
-- =fa::finite_automata::simulate ( std::string word)=: simulate the
-  finite automata on ths string =word=.
-- =fa::finite_automata::move (states current_state, symbol input_symbol)= : return the destination state/s from =current_state= when =input_symbol= is scanned.
-- =fa::finite_automata::move (std::set<state> states, symbol input_symbol)= : return the destination state/s from =states= when =input_symbol= is scanned.
-- =fa::finite_automata::epsilon_closure (state st)= : return the epsilon closure of the state =st=.
-- =fa::finite_automata::epsilon_closure (std::set<state> st)= : return the epsilon closure of the set of states =st=.
+- [[https://gcc.gnu.org][standard C++ compiler]]
+- [[https://www.gnu.org/software/make/][GNU Make]]
+  
+**  How to use it ?
 
-*** non-member functions
-- =fa::convert_to_dfa (finite_automata nfa)=: function which simply converts a [[https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton][NFA]] to [[https://en.wikipedia.org/wiki/Deterministic_finite_automaton][DFA]] using [[https://en.wikipedia.org/wiki/Powerset_construction][subset construction method]] and returns the converted dfa ( object of type finite_automata )
+1. Go to src/ diectory.
+   
+2. Run =make install= to build the static library in =./binaries=.
+
+3. for any query/bug report, feel free to open an [[https://github.com/Arsenic-ATG/Finite-Automata/issues][issue]] regarding the same.
+   
+** Examples
+
+check out [[file:src/testsuite/fa-basic.tests/convertor.cpp][this example]] which demostrates the use of =fa::convert_to_dfa ()= to convert an NFA to corresponding DFA.
 
 * For the Devs
 
 [WIP]
 
+* License
+
+ [[file:LICENSE][MIT License]]
+   Copyright 2022 © [[https://github.com/Arsenic-ATG][Ankur Saini]]
