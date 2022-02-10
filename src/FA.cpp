@@ -8,7 +8,9 @@
 #include <algorithm>
 using namespace fa;
 
-/*Constructor of class finite_autometa.  */
+/**
+Constructor of class finite_autometa.
+*/
 finite_automata::finite_automata (const std::set <state> states,
 				  const std::set <symbol> input_alpha,
 				  const std::set <state> final_states,
@@ -19,7 +21,9 @@ finite_automata::finite_automata (const std::set <state> states,
   //TODO: check if it's an DFA or not and set is_dfa accordingly
 }
 
-/*Constructor of class finite_autometa.  */
+/**
+Constructor of class finite_autometa.
+*/
 finite_automata::finite_automata (const std::set <symbol> input_alpha,
                                   const state initial_state,
 				  transition_table relations,
@@ -28,7 +32,9 @@ finite_automata::finite_automata (const std::set <symbol> input_alpha,
 {
 }
 
-/*Constructor of class finite_autometa.  */
+/**
+Constructor of class finite_autometa.
+*/
 finite_automata::finite_automata (const state initial_state,
 				  transition_table relations,
 				  const std::set <state> final_states)
@@ -36,9 +42,12 @@ finite_automata::finite_automata (const state initial_state,
 {
 }
 
-/*Function to move from one state to another based on the trasition relation
-  defined by the autometa and return the set of new states the autometa can move
-  to and return empty set in case the transition relation doesn't exist.  */
+/**
+Function to move from one state to another based on the trasition
+relation defined by the autometa and return the set of new states
+the autometa can move to and return empty set in case the transition
+relation doesn't exist.
+*/
 std::set <state>
 finite_automata::move (state current_state, symbol input_symbol) const
 {
@@ -53,10 +62,12 @@ finite_automata::move (state current_state, symbol input_symbol) const
 }
 
 
-/*Function to move from a set of states to another based on the trasition
-  relation defined by the autometa and return the set of new states the autometa
-  can move to and return empty set in case the transition relation doesn't
-  exist.  */
+/**
+Function to move from a set of states to another based on the trasition
+relation defined by the autometa and return the set of new states the autometa
+can move to and return empty set in case the transition relation doesn't
+exist.
+*/
 std::set <state>
 finite_automata::move (std::set<state> states, symbol input_symbol) const
 {
@@ -96,9 +107,11 @@ finite_automata::simulate (std::string word) const
 }
 
 
-/*epsilon_closure of state ST ( fo the current FA) is a set of states
-  that are reachable from the state St wihout scanning a symbol from
-  the tape (on an epsilon move).  */
+/**
+epsilon_closure of state ST ( fo the current FA) is a set of states
+that are reachable from the state St wihout scanning a symbol from
+the tape (on an epsilon move).
+*/
 std::set <state>
 finite_automata::epsilon_closure (state st) const
 {
@@ -125,7 +138,9 @@ finite_automata::epsilon_closure (state st) const
   return e_closure;
 }
 
-/*calculate epsilon_clsore of a compaund state ST (represented as a set of states ).  */
+/**
+calculate epsilon_clsore of a compaund state ST (represented as a set of states ).
+*/
 std::set <state>
 finite_automata::epsilon_closure (std::set <state> st) const
 {
@@ -153,8 +168,10 @@ finite_automata::epsilon_closure (std::set <state> st) const
   return e_closure;
 }
 
-/*Utility function to calculate state set from given transition
-  relations.  */
+/**
+Utility function to calculate state set from given transition
+relations.
+*/
 std::set<state>
 fa::calc_state_set (const transition_table &relations)
 {
@@ -171,8 +188,10 @@ fa::calc_state_set (const transition_table &relations)
   return states;
 }
 
-/*Utility function to calculate set of input alphabets from given
-  transition relations.  */
+/**
+Utility function to calculate set of input alphabets from given
+transition relations.
+*/
 std::set<symbol>
 fa::calc_input_alpha (const transition_table &relations)
 {
@@ -186,9 +205,11 @@ fa::calc_input_alpha (const transition_table &relations)
   return input_alpha;
 }
 
-/*Function to convert given NFA to equivalant DFA via subset
-  construction method. The function doesn't gurentee the DFA to be
-  minimised DFA.  */
+/**
+Function to convert given NFA to equivalant DFA via subset
+construction method. The function doesn't gurentee the DFA to be
+minimised DFA.
+*/
 finite_automata
 fa::convert_to_dfa (const finite_automata &nfa)
 {
