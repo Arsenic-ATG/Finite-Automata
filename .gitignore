@@ -1,6 +1,12 @@
 ### project sepcific binaries ###
 convertor
 *.o
+binaries
+
+### Docs ###
+_static/
+_templates/
+_build/
 
 ### ggtags ###
 GPATH
