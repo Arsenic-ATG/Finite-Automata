@@ -32,7 +32,7 @@ extensions = [
 ]
 
 # Breathe Configuration
-breathe_projects = { "finite_automata": "xml/" }
+breathe_projects = { "finite_automata": "_build/xml/" }
 breathe_default_project = "finite_automata"
 breathe_default_members = ('members', 'undoc-members')
 
