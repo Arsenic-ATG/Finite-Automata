@@ -4,6 +4,7 @@
 #include <map>
 #include <set>
 #include <utility>
+#include <string>
 
 namespace fa
 {
@@ -14,7 +15,7 @@ using symbol = char;
 
 /* Each STATE on scanning a symbol maps to a set of states.  */
 using transition_table = std::map <std::pair <state, symbol>,
-				   std::set <state>>;
+				   std::set <state> >;
 
 /* A finite autometa is a 5 tupple ( Q, sigma, delta, F, q0 ).  */
 class finite_automata

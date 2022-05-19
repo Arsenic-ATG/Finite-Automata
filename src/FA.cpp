@@ -84,7 +84,9 @@ finite_automata::move (std::set<state> states, symbol input_symbol) const
   return destination_set;
 }
 
-/*simulate finite automata to recognize string WORD.  */
+/**
+simulate finite automata to recognize string WORD.
+*/
 bool
 finite_automata::simulate (std::string word) const
 {
