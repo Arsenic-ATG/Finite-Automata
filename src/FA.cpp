@@ -1,4 +1,4 @@
-#include "FA.h"
+#include "FA.hpp"
 #include <stack>
 #include <set>
 #include <map>
@@ -9,7 +9,7 @@
 using namespace fa;
 
 /**
-Constructor of class finite_autometa.
+Constructor of class finite_automata.
 */
 finite_automata::finite_automata (const std::set <state> states,
 				  const std::set <symbol> input_alpha,
@@ -22,7 +22,8 @@ finite_automata::finite_automata (const std::set <state> states,
 }
 
 /**
-Constructor of class finite_autometa.
+Constructor of class finite_automata.
+set of states is deduced from given transition table
 */
 finite_automata::finite_automata (const std::set <symbol> input_alpha,
                                   const state initial_state,
@@ -33,12 +34,21 @@ finite_automata::finite_automata (const std::set <symbol> input_alpha,
 }
 
 /**
-Constructor of class finite_autometa.
+Constructor of class finite_automata.
+set of states and set of input alphabets are deduced from given transition table
 */
 finite_automata::finite_automata (const state initial_state,
 				  transition_table relations,
 				  const std::set <state> final_states)
   :m_Q (calc_state_set (relations)), m_input (calc_input_alpha (relations)), m_F (final_states), m_q0 (initial_state), m_tr (relations)
+{
+}
+
+/**
+Copy Constructor of class finite_automata.
+*/
+finite_automata::finite_automata(const finite_automata &other)
+  : m_Q (other.get_states), m_input (other.get_input_chars), m_F (other.get_finalstates), m_q0 (other.get_initialstate), m_tr (other.get_transition_relations)
 {
 }
 
@@ -171,8 +181,10 @@ finite_automata::epsilon_closure (std::set <state> st) const
 }
 
 /**
-Utility function to calculate state set from given transition
-relations.
+Utility function to calculate state set (set of states involved in the transition) from given transition
+relations (RELATIONS).
+
+used by constructor of finite autometa to construct set of states from given transition table
 */
 std::set<state>
 fa::calc_state_set (const transition_table &relations)
@@ -192,7 +204,9 @@ fa::calc_state_set (const transition_table &relations)
 
 /**
 Utility function to calculate set of input alphabets from given
-transition relations.
+transition relations (RELATIONS).
+
+used by constructor of finite automata to find set of input alphabets from it's transition table
 */
 std::set<symbol>
 fa::calc_input_alpha (const transition_table &relations)

@@ -37,7 +37,10 @@ class finite_automata
 		   const transition_table ralations,
 		   const std::set <state> final_states);
 
+  finite_automata (const finite_automata &other);
+
   // TODO: make one for regex also.
+
   auto simulate (std::string word) const -> bool;
   auto move (state current_state,
              symbol scanned_symbol) const -> std::set <state>;
