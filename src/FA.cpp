@@ -9,7 +9,7 @@
 using namespace fa;
 
 /**
-Constructor of class finite_automata.
+   Constructor of class finite_automata.
 */
 finite_automata::finite_automata (const std::set <state> states,
 				  const std::set <symbol> input_alpha,
@@ -22,8 +22,8 @@ finite_automata::finite_automata (const std::set <state> states,
 }
 
 /**
-Constructor of class finite_automata.
-set of states is deduced from given transition table
+   Constructor of class finite_automata.
+   set of states is deduced from given transition table
 */
 finite_automata::finite_automata (const std::set <symbol> input_alpha,
                                   const state initial_state,
@@ -34,8 +34,8 @@ finite_automata::finite_automata (const std::set <symbol> input_alpha,
 }
 
 /**
-Constructor of class finite_automata.
-set of states and set of input alphabets are deduced from given transition table
+   Constructor of class finite_automata.
+   set of states and set of input alphabets are deduced from given transition table
 */
 finite_automata::finite_automata (const state initial_state,
 				  transition_table relations,
@@ -45,18 +45,18 @@ finite_automata::finite_automata (const state initial_state,
 }
 
 /**
-Copy Constructor of class finite_automata.
+   Copy Constructor of class finite_automata.
 */
 finite_automata::finite_automata(const finite_automata &other)
-  : m_Q (other.get_states), m_input (other.get_input_chars), m_F (other.get_finalstates), m_q0 (other.get_initialstate), m_tr (other.get_transition_relations)
+  : m_Q (other.get_states ()), m_input (other.get_input_chars ()), m_F (other.get_finalstates ()), m_q0 (other.get_initialstate ()), m_tr (other.get_transition_relations ())
 {
 }
 
 /**
-Function to move from one state to another based on the trasition
-relation defined by the autometa and return the set of new states
-the autometa can move to and return empty set in case the transition
-relation doesn't exist.
+   Function to move from one state to another based on the trasition
+   relation defined by the autometa and return the set of new states
+   the autometa can move to and return empty set in case the transition
+   relation doesn't exist.
 */
 std::set <state>
 finite_automata::move (state current_state, symbol input_symbol) const
@@ -73,10 +73,10 @@ finite_automata::move (state current_state, symbol input_symbol) const
 
 
 /**
-Function to move from a set of states to another based on the trasition
-relation defined by the autometa and return the set of new states the autometa
-can move to and return empty set in case the transition relation doesn't
-exist.
+   Function to move from a set of states to another based on the trasition
+   relation defined by the autometa and return the set of new states the autometa
+   can move to and return empty set in case the transition relation doesn't
+   exist.
 */
 std::set <state>
 finite_automata::move (std::set<state> states, symbol input_symbol) const
@@ -95,7 +95,7 @@ finite_automata::move (std::set<state> states, symbol input_symbol) const
 }
 
 /**
-simulate finite automata to recognize string WORD.
+   simulate finite automata to recognize string WORD.
 */
 bool
 finite_automata::simulate (std::string word) const
@@ -118,11 +118,10 @@ finite_automata::simulate (std::string word) const
   return true;
 }
 
-
 /**
-epsilon_closure of state ST ( fo the current FA) is a set of states
-that are reachable from the state St wihout scanning a symbol from
-the tape (on an epsilon move).
+   epsilon_closure of state ST ( fo the current FA) is a set of states
+   that are reachable from the state St wihout scanning a symbol from
+   the tape (on an epsilon move).
 */
 std::set <state>
 finite_automata::epsilon_closure (state st) const
@@ -151,7 +150,7 @@ finite_automata::epsilon_closure (state st) const
 }
 
 /**
-calculate epsilon_clsore of a compaund state ST (represented as a set of states ).
+   calculate epsilon_clsore of a compaund state ST (represented as a set of states ).
 */
 std::set <state>
 finite_automata::epsilon_closure (std::set <state> st) const
@@ -181,10 +180,10 @@ finite_automata::epsilon_closure (std::set <state> st) const
 }
 
 /**
-Utility function to calculate state set (set of states involved in the transition) from given transition
-relations (RELATIONS).
+   Utility function to calculate state set (set of states involved in the transition) from given transition
+   relations (RELATIONS).
 
-used by constructor of finite autometa to construct set of states from given transition table
+   used by constructor of finite autometa to construct set of states from given transition table
 */
 std::set<state>
 fa::calc_state_set (const transition_table &relations)
@@ -203,10 +202,10 @@ fa::calc_state_set (const transition_table &relations)
 }
 
 /**
-Utility function to calculate set of input alphabets from given
-transition relations (RELATIONS).
+   Utility function to calculate set of input alphabets from given
+   transition relations (RELATIONS).
 
-used by constructor of finite automata to find set of input alphabets from it's transition table
+   used by constructor of finite automata to find set of input alphabets from it's transition table
 */
 std::set<symbol>
 fa::calc_input_alpha (const transition_table &relations)
@@ -222,9 +221,9 @@ fa::calc_input_alpha (const transition_table &relations)
 }
 
 /**
-Function to convert given NFA to equivalant DFA via subset
-construction method. The function doesn't gurentee the DFA to be
-minimised DFA.
+   Function to convert given NFA to equivalant DFA via subset
+   construction method. The function doesn't gurentee the DFA to be
+   minimised DFA.
 */
 finite_automata
 fa::convert_to_dfa (const finite_automata &nfa)
@@ -280,7 +279,7 @@ fa::convert_to_dfa (const finite_automata &nfa)
   for (auto transition : dfa_trans)
     {
       auto source = std::make_pair (dfa_code_map [transition.first.first],
-                                   transition.first.second);
+                                    transition.first.second);
       auto destination = std::set <state> {dfa_code_map [transition.second]};
 
       final_dfa_trans [source] = destination;
