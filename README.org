@@ -49,7 +49,7 @@ learn more about the API in the docs.
    
 ** Examples
 
-check out [[file:src/testsuite/fa-basic.tests/convertor.cpp][this example]] which demostrates the use of =fa::convert_to_dfa ()= to convert an NFA to corresponding DFA.
+check out [[file:testsuite/fa-basic.tests/convertor.cpp][this example]] which demostrates the use of =fa::convert_to_dfa ()= to convert an NFA to corresponding DFA.
 
 * For the Devs
 
